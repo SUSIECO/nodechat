@@ -7,7 +7,7 @@
         "express": "latest",
         "jade": "latest"
     },
-    "author": "developer"
+    "author": "developer",
     "scripts": {
         "start": "node index.js"
     }
