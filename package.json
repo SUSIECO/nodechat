@@ -8,4 +8,7 @@
         "jade": "latest"
     },
     "author": "developer"
+    "scripts": {
+        "start": "node index.js"
+    }
 }
