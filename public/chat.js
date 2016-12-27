@@ -1,7 +1,9 @@
 window.onload = function() {
 
     var messages = [];
-    var socket = io.connect('http://192.168.1.152:3700');
+
+    var host = 'https://guarded-lowlands-86253.herokuapp.com';
+    var socket = io.connect(host);
     var field = document.getElementById("field");
     var sendButton = document.getElementById("send");
     var content = document.getElementById("content");
