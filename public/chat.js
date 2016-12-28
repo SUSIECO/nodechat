@@ -24,7 +24,6 @@ window.onload = function() {
             $('#content').animate({
                 'scrollTop': content.scrollHeight
             }, 200);
-            $('#receive')[0].play();
             content.innerHTML = html;
             $('#receive')[0].play();
         } else {
