@@ -21,6 +21,7 @@ window.onload = function() {
                 html += '<b>' + '<h4 style="font-family: Ubuntu Condensed; padding-left: 4px; margin-top: 2px; margin-bottom: 0; display: inline-block;">' + (messages[i].username ? messages[i].username : 'Server') + '</h4>' + ': </b>';
                 html += messages[i].message + '<br />';
             }
+            $('#content').animate({'scrollTop':content.scrollHeight}, 200);
             content.innerHTML = html;
         } else {
             console.log("There is a problem:", data);
