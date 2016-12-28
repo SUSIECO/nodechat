@@ -24,13 +24,17 @@ window.onload = function() {
             $('#content').animate({
                 'scrollTop': content.scrollHeight
             }, 200);
+            $('#receive')[0].play();
             content.innerHTML = html;
+            $('#receive')[0].play();
         } else {
             console.log("There is a problem:", data);
         }
     });
 
-    sendButton.onclick = submitChat;
+    $('#send').click(function() {
+      submitChat();
+    });
 
     $('#field').keypress(function(event) {
         var keycode = (event.keyCode ? event.keyCode : event.which);
@@ -47,6 +51,7 @@ window.onload = function() {
             $('#content').animate({
                 'scrollTop': content.scrollHeight
             }, 200);
+            $('#sendsound')[0].play();
             field.value = "";
             socket.emit('send', {
                 message: '<h4 style="display: inline-block; font-family: Roboto Condensed; margin-top: 2px; margin-bottom: 0;">' + text + '</h4>',
