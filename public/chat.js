@@ -32,11 +32,10 @@ window.onload = function() {
             alert("Please type your name!");
         } else {
             var text = field.value;
+            $('#content').animate({'scrollTop':content.scrollHeight}, 200);
+            field.value = "";
             socket.emit('send', { message: '<h4 style="display: inline-block; font-family: Roboto Condensed; margin-top: 2px; margin-bottom: 0;">' + text + '</h4>', username: '<h4 style="margin-top: 2px; margin-bottom: 0; font-family: Ubuntu Condensed; display: inline-block">' + name.value + '</h4>' });
         }
 
     };
-
-
-
 }
