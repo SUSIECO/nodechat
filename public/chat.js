@@ -14,7 +14,7 @@ window.onload = function() {
 
     //https://guarded-lowlands-86253.herokuapp.com
     //http://localhost:3700
-    var host = 'http://localhost:3700';
+    var host = 'https://guarded-lowlands-86253.herokuapp.com';
     var socket = io.connect(host);
     var field = document.getElementById("field");
     var sendButton = document.getElementById("send");
