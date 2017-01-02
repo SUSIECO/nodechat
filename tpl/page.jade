@@ -13,10 +13,21 @@ html
       input
       {
       font-family: 'Ubuntu Condensed';
+      font-size: 15px;
+      margin-left: 5px;
+      display: inline-block;
       }
-      button:focus
+      input:focus
       {
       outline: none;
+      }
+      #send
+      {
+        background-color: #CCC;
+      }
+      #send:hover, #send:focus
+      {
+        background-color: #999;
       }
       .jumbotron {
       background-color: rgba(204, 204, 204, 0);
@@ -82,6 +93,6 @@ html
       #animationlayer
       #textlayer
     .controls
-    input#name(style='width:25%; font-size: 15px; margin-left: 5px; display: inline-block;', placeholder='Name')
-    input#field(style='width:70%; font-size: 15px; margin-left: 5px; display: inline-block;', placeholder='Message')
-    input#send(style='display: inline-block; margin-top: 0; border: none; margin-left: 5px; font-size: 15px; padding: 0px 12px 0px 12px; height: 25px; border-radius: 0;', type='submit', value='Send')
+    input#name(style='width:25%;', placeholder='Name')
+    input#field(style='width:70%;', placeholder='Message')
+    input#send(style='margin-top: 0; border: none; padding: 0px 12px 0px 12px; height: 25px; border-radius: 0;', type='submit', value='Send')
