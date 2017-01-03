@@ -12,10 +12,7 @@ window.onload = function() {
     }, {
         'code': '{Puppy2}',
         'effect': runningPuppy
-    }, {
-        'code': '{Nutella}',
-        'effect': nutellaAnimation
-    }];
+    },];
 
 
     //https://guarded-lowlands-86253.herokuapp.com
@@ -40,7 +37,6 @@ window.onload = function() {
         });
     }
 
-    //Receives Messages
     socket.on('message', function(data) {
         if (data.message) {
 
@@ -74,7 +70,6 @@ window.onload = function() {
         }
     });
 
-    //Sends Messages
     function submitChat() {
         if (name.value == "") {
             alert("Please type your name!");
@@ -94,7 +89,6 @@ window.onload = function() {
 
 
     // Special Effects Animations
-    //Rocket Animation
     function rocketAnimation() {
         $('<img id="rocket" src="images/rocket.png" style="position:absolute;opacity:0;z-index:500">').on('load',function(){
 
@@ -116,7 +110,7 @@ window.onload = function() {
           });
         });
     }
-    //Puppy Animation
+
     function puppyAnimation() {
       $('<img id="puppy" src="images/puppy.png" style="position:absolute;opacity:0;z-index:500">').on('load',function(){
 
@@ -138,7 +132,6 @@ window.onload = function() {
       });
     }
 
-    //Running Puppy Animation
     function runningPuppy() {
       $('<img id="puppy" src="images/puppyanim.gif" style="position:absolute;opacity:0;z-index:500">').on('load',function(){
 
