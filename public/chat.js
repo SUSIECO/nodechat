@@ -95,7 +95,7 @@ window.onload = function() {
           $('#animationlayer').append($(this));
           var rocket=$('#rocket');
           rocket.css({
-              top: $('#animationlayer').height() - rocket.height(),
+              top: $('#content').prop('scrollHeight') - rocket.height(),
               left: $('#content').width() / 2,
               position: 'absolute',
               opacity: 1
@@ -103,7 +103,7 @@ window.onload = function() {
           console.log(rocket.height());
 
           rocket.animate({
-              top: -rocket.height(),
+              top: $('#content').prop('scrollHeight') - $('#content').height() - rocket.height(),
               left: $('#content').width() / 2,
           }, 1000, function() {
               rocket.remove()
@@ -117,14 +117,14 @@ window.onload = function() {
         $('#animationlayer').append($(this));
         var puppy=$('#puppy');
         puppy.css({
-            top: $('#animationlayer').height() - puppy.height(),
+            top: $('#content').prop('scrollHeight') - puppy.height(),
             left: 0,
             position: 'absolute',
             opacity: 1
         });
 
         puppy.animate({
-            top: $('#animationlayer').height() - puppy.height(),
+            top: $('#content').prop('scrollHeight') - puppy.height(),
             left: $('#animationlayer').width() - puppy.width(),
         }, 3000, function() {
             puppy.remove()
@@ -138,7 +138,7 @@ window.onload = function() {
         $('#animationlayer').append($(this));
         var puppy=$('#puppy');
         puppy.css({
-            top: $('#animationlayer').height()/2 - puppy.height()/2,
+            top: $('#content').prop('scrollHeight') - $('#content').height()/2 - puppy.height()/2,
             left: $('#animationlayer').width()/2 - puppy.width()/2,
             position: 'absolute',
             opacity: 1
