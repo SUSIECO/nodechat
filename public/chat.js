@@ -1,6 +1,7 @@
 window.onload = function() {
 
     var messages = [];
+    var names = [];
 
     // Setup Special Effects
     var specialEffects = [{
@@ -12,10 +13,7 @@ window.onload = function() {
     }, {
         'code': '{Puppy2}',
         'effect': runningPuppy
-    }, {
-        'code': 'Happy Birthday',
-        'effect': birthdayEffect
-    },];
+    }];
 
     // Switch Between These Two Links on the Host When Editing and Testing
     // https://guarded-lowlands-86253.herokuapp.com - Testing [Public Link]
@@ -27,6 +25,7 @@ window.onload = function() {
     var content = document.getElementById("textlayer");
     var name = document.getElementById("name");
     var hostname = document.getElementById("hostname")
+    var users = document.getElementById("users");
 
     hostname.innerHTML = host;
 
@@ -40,7 +39,7 @@ window.onload = function() {
         });
     }
 
-    // Displays the Messages
+    // Receives the Messages
     socket.on('message', function(data) {
         if (data.message) {
 
@@ -50,13 +49,15 @@ window.onload = function() {
             var html = '';
             for (var i = 0; i < messages.length; i++) {
                 html += '<b>' + '<h4 style="font-family: Ubuntu Condensed; padding-left: 4px; margin-top: 2px; margin-bottom: 0; display: inline-block;">' + (messages[i].username ? messages[i].username : 'Server') + '</h4>' + ': </b>';
-                html += messages[i].message + '<br />';
+                html += '<h4 class="message">' + messages[i].message + '</h4>' + '<br />';
             }
             $('#content').animate({
                 'scrollTop': content.scrollHeight
             }, 200);
             content.innerHTML = html;
             $('#receive')[0].play();
+
+            submitName(data.username);
 
         } else {
             console.log("There is a problem:", data);
@@ -88,12 +89,33 @@ window.onload = function() {
             $('#sendsound')[0].play();
             field.value = "";
             socket.emit('send', {
-                message: '<h4 class="message">' + text + '</h4>',
-                username: '<h4 class="name">' + name.value + '</h4>'
+                message: text,
+                username: name.value
             });
+            submitName(name.value);
         }
     }
 
+    function submitName(name) {
+      if (findName(name) == -1) {
+        names.push(name);
+      }
+
+      var html=""
+      for (var i = 0; i < names.length; i++) {
+          html += '<b>' + '<h4 style="font-family: Ubuntu Condensed; padding-left: 4px; margin-top: 2px; margin-bottom: 0; display: inline-block;">' + names[i] + '</h4> </b> <br>';
+      }
+      users.innerHTML=html
+    }
+
+    function findName(name) {
+        for (var i = 0; i < names.length; i++) {
+          if (names[i] == name) {
+            return i;
+          }
+        }
+        return -1;
+    }
 
     // Special Effects Animations
 
