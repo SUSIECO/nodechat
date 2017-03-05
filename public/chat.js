@@ -7,9 +7,9 @@ window.onload = function() {
         'code': '{=>}',
         'effect': rocketAnimation
     }, {
-    //     'code': '{Puppy}',
-    //     'effect': puppyAnimation
-    // }, {
+        'code': '{Puppy}',
+        'effect': puppyAnimation
+    }, {
         'code': '{Puppy2}',
         'effect': runningPuppy
     }, {
