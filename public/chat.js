@@ -20,7 +20,7 @@ window.onload = function() {
     // Switch Between These Two Links on the Host When Editing and Testing
     // https://guarded-lowlands-86253.herokuapp.com - Testing [Public Link]
     // http://localhost:3700 - Editing [Private Link]
-    var host = 'http://localhost:3700';
+    var host = 'https://guarded-lowlands-86253.herokuapp.com';
     var socket = io.connect(host);
     var field = document.getElementById("field");
     var sendButton = document.getElementById("send");
