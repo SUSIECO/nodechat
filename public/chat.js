@@ -15,10 +15,10 @@ window.onload = function() {
         'effect': runningPuppy
     }];
 
-    // Switch Between These Two Links on the Host When Editing and Testing
-    // https://guarded-lowlands-86253.herokuapp.com - Testing [Public Link]
-    // http://localhost:3700 - Editing [Private Link]
-    var host = 'https://guarded-lowlands-86253.herokuapp.com';
+    // Switch Between These Two Links on the Host When Testing and Publishing
+    // https://guarded-lowlands-86253.herokuapp.com - Publishing [Public Link]
+    // http://localhost:3700 - Testing [Private Link]
+    var host = 'http://localhost:3700';
     var socket = io.connect(host);
     var field = document.getElementById("field");
     var sendButton = document.getElementById("send");
@@ -144,7 +144,7 @@ window.onload = function() {
 
     // Puppy Animation [Down]
     function puppyAnimation() {
-      $('<img id="puppy" src="images/puppy.png" style="position:absolute;opacity:0;z-index:500">').on('load',function(){
+      $('<img id="puppy" src="images/puppy1.gif" style="position:absolute;opacity:0;z-index:500">').on('load',function(){
 
         $('#animationlayer').append($(this));
         var puppy=$('#puppy');
@@ -158,7 +158,7 @@ window.onload = function() {
         puppy.animate({
             top: $('#content').prop('scrollHeight') - puppy.height(),
             left: $('#animationlayer').width() - puppy.width(),
-        }, 3000, function() {
+        }, 1500, function() {
             puppy.remove()
         });
       });
