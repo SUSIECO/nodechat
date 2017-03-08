@@ -149,7 +149,7 @@ window.onload = function() {
     }
 
     // Typing Animation
-    setInterval(checkForContent, 3000);
+    setInterval(checkForContent, 1500);
 
     var previousMessageValue=""
 
