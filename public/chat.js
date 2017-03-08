@@ -3,6 +3,8 @@ window.onload = function() {
     var messages = [];
     var names = [];
 
+
+
     // Setup Special Effects
     var specialEffects = [{
         'code': '{=>}',
@@ -13,7 +15,9 @@ window.onload = function() {
     }, {
         'code': '{Puppy2}',
         'effect': runningPuppy
-    }];
+    }
+
+  ];
 
     // Switch Between These Two Links on the Host When Testing and Publishing
     // https://guarded-lowlands-86253.herokuapp.com - Publishing [Public Link]
@@ -39,9 +43,28 @@ window.onload = function() {
         });
     }
 
+    function checkTypingAnimation(message, username) {
+      if(message == "{TYPING}") {
+        submitName(username, true)
+        return true
+      }
+      if(message == "{CLEAR-TYPING}") {
+        submitName(username, false)
+        return true
+      }
+      return false
+    }
+
     // Receives the Messages
     socket.on('message', function(data) {
         if (data.message) {
+
+
+            if(checkTypingAnimation(data.message, data.username)) {
+              return;
+            } else {
+              submitName(data.username, false)
+            }
 
             applyEffects(data.message);
 
@@ -92,96 +115,132 @@ window.onload = function() {
                 message: text,
                 username: name.value
             });
-            submitName(name.value);
+            //submitName(name.value);
         }
     }
 
-    function submitName(name) {
-      if (findName(name) == -1) {
-        names.push(name);
-      }
+    // Adds Name to Users List, if Name is not Already Present
+    function submitName(name, isTyping) {
+        var i=findName(name)
+        if (i == -1) {
+            names.push( {'name':name, 'isTyping': isTyping });
+        }else {
+          names[i].isTyping=isTyping
+        }
 
-      var html=""
-      for (var i = 0; i < names.length; i++) {
-          html += '<b>' + '<h4 style="font-family: Ubuntu Condensed; padding-left: 4px; margin-top: 2px; margin-bottom: 0; display: inline-block;">' + names[i] + '</h4> </b> <br>';
-      }
-      users.innerHTML=html
+        var html = ""
+        for (var i = 0; i < names.length; i++) {
+            html += '<div><b>' + '<h4 style="font-family: Ubuntu Condensed; padding-left: 4px; margin-top: 2px; margin-bottom: 0; display: inline-block;">' + names[i].name + '</h4> </b>';
+            if(names[i].isTyping) {
+              html += '<img id="typing" src="images/giphy.gif" style="padding-bottom: 3px;z-index:500;height: 10px;">'
+            }
+            html+= '</div>'
+        }
+        users.innerHTML = html
     }
 
     function findName(name) {
         for (var i = 0; i < names.length; i++) {
-          if (names[i] == name) {
-            return i;
-          }
+            if (names[i].name == name) {
+                return i;
+            }
         }
         return -1;
     }
 
-    // Special Effects Animations
+    // Typing Animation
+    setInterval(checkForContent, 3000);
+
+    var previousMessageValue=""
+
+    function checkForContent() {
+        var userTyping = false;
+
+        var messageValue = document.getElementById('field').value
+
+        if(messageValue==previousMessageValue) {
+          return
+        }
+
+        if ( messageValue == '') {
+            console.log("Not Typing.");
+            socket.emit('send', {
+                message: '{CLEAR-TYPING}',
+                username: name.value
+            });
+        } else {
+            console.log("Typing!");
+            socket.emit('send', {
+                message: '{TYPING}',
+                username: name.value
+            });
+        }
+        previousMessageValue=messageValue
+    }
 
     // Rocket Animation
     function rocketAnimation() {
-        $('<img id="rocket" src="images/rocket.png" style="position:absolute;opacity:0;z-index:500">').on('load',function(){
+        $('<img id="rocket" src="images/rocket.png" style="position:absolute;opacity:0;z-index:500">').on('load', function() {
 
-          $('#animationlayer').append($(this));
-          var rocket=$('#rocket');
-          rocket.css({
-              top: $('#content').prop('scrollHeight') - rocket.height(),
-              left: $('#content').width() / 2,
-              position: 'absolute',
-              opacity: 1
-          });
-          console.log(rocket.height());
+            $('#animationlayer').append($(this));
+            var rocket = $('#rocket');
+            rocket.css({
+                top: $('#content').prop('scrollHeight') - rocket.height(),
+                left: $('#content').width() / 2,
+                position: 'absolute',
+                opacity: 1
+            });
+            console.log(rocket.height());
 
-          rocket.animate({
-              top: $('#content').prop('scrollHeight') - $('#content').height() - rocket.height(),
-              left: $('#content').width() / 2,
-          }, 1000, function() {
-              rocket.remove()
-          });
+            rocket.animate({
+                top: $('#content').prop('scrollHeight') - $('#content').height() - rocket.height(),
+                left: $('#content').width() / 2,
+            }, 1000, function() {
+                rocket.remove()
+            });
         });
     }
 
-    // Puppy Animation [Down]
+    // Puppy Animation
     function puppyAnimation() {
-      $('<img id="puppy" src="images/puppy1.gif" style="position:absolute;opacity:0;z-index:500">').on('load',function(){
+        $('<img id="puppy" src="images/puppy1.gif" style="position:absolute;opacity:0;z-index:500">').on('load', function() {
 
-        $('#animationlayer').append($(this));
-        var puppy=$('#puppy');
-        puppy.css({
-            top: $('#content').prop('scrollHeight') - puppy.height(),
-            left: 0,
-            position: 'absolute',
-            opacity: 1
-        });
+            $('#animationlayer').append($(this));
+            var puppy = $('#puppy');
+            puppy.css({
+                top: $('#content').prop('scrollHeight') - puppy.height(),
+                left: 0,
+                position: 'absolute',
+                opacity: 1
+            });
 
-        puppy.animate({
-            top: $('#content').prop('scrollHeight') - puppy.height(),
-            left: $('#animationlayer').width() - puppy.width(),
-        }, 1500, function() {
-            puppy.remove()
+            puppy.animate({
+                top: $('#content').prop('scrollHeight') - puppy.height(),
+                left: $('#animationlayer').width() - puppy.width(),
+            }, 1500, function() {
+                puppy.remove()
+            });
         });
-      });
     }
 
     // Second Puppy Animation
     function runningPuppy() {
-      $('<img id="puppy" src="images/puppyanim.gif" style="position:absolute;opacity:0;z-index:500">').on('load',function(){
+        $('<img id="puppy" src="images/puppyanim.gif" style="position:absolute;opacity:0;z-index:500">').on('load', function() {
 
-        $('#animationlayer').append($(this));
-        var puppy=$('#puppy');
-        puppy.css({
-            top: $('#content').prop('scrollHeight') - $('#content').height()/2 - puppy.height()/2,
-            left: $('#animationlayer').width()/2 - puppy.width()/2,
-            position: 'absolute',
-            opacity: 1
-        });
+            $('#animationlayer').append($(this));
+            var puppy = $('#puppy');
+            puppy.css({
+                top: $('#content').prop('scrollHeight') - $('#content').height() / 2 - puppy.height() / 2,
+                left: $('#animationlayer').width() / 2 - puppy.width() / 2,
+                position: 'absolute',
+                opacity: 1
+            });
 
-        puppy.animate({
-            opacity: 0
-        }, 3000, function() {
-            puppy.remove()
+            puppy.animate({
+                opacity: 1
+            }, 3000, function() {
+                puppy.remove()
+            });
         });
-      });
     }
 }
