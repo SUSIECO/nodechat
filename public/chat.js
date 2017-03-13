@@ -3,35 +3,46 @@ window.onload = function() {
     var messages = [];
     var names = [];
 
-
-
     // Setup Special Effects
     var specialEffects = [{
-        'code': '{=>}',
-        'effect': rocketAnimation
-    }, {
-        'code': '{Puppy}',
-        'effect': puppyAnimation
-    }, {
-        'code': '{Puppy2}',
-        'effect': runningPuppy
-    }
+            'code': '{=>}',
+            'effect': rocketAnimation
+        }, {
+            'code': '{Puppy}',
+            'effect': puppyAnimation
+        }, {
+            'code': '{Puppy2}',
+            'effect': runningPuppy
+        }
 
-  ];
+    ];
 
     // Switch Between These Two Links on the Host When Testing and Publishing
     // https://guarded-lowlands-86253.herokuapp.com - Publishing [Public Link]
     // http://localhost:3700 - Testing [Private Link]
-    var host = 'https://guarded-lowlands-86253.herokuapp.com';
+    var host = 'http://localhost:3700';
     var socket = io.connect(host);
     var field = document.getElementById("field");
     var sendButton = document.getElementById("send");
     var content = document.getElementById("textlayer");
+    var display = document.getElementById("displaylayer");
     var name = document.getElementById("name");
     var hostname = document.getElementById("hostname")
     var users = document.getElementById("users");
 
     hostname.innerHTML = host;
+
+    document.getElementById("start").onclick = startChat;
+
+    function startChat() {
+        if (name.value == "") {
+            alert("Please type your name!");
+        } else {
+            console.log("Chat Starting!");
+            $("#field").prop('readonly', false);
+            display.style.opacity = 0;
+        }
+    }
 
     function applyEffects(message) {
         $.each(specialEffects, function(index, value) {
@@ -44,15 +55,15 @@ window.onload = function() {
     }
 
     function checkTypingAnimation(message, username) {
-      if(message == "{TYPING}") {
-        submitName(username, true)
-        return true
-      }
-      if(message == "{CLEAR-TYPING}") {
-        submitName(username, false)
-        return true
-      }
-      return false
+        if (message == "{TYPING}") {
+            submitName(username, true)
+            return true
+        }
+        if (message == "{CLEAR-TYPING}") {
+            submitName(username, false)
+            return true
+        }
+        return false
     }
 
     // Receives the Messages
@@ -60,10 +71,10 @@ window.onload = function() {
         if (data.message) {
 
 
-            if(checkTypingAnimation(data.message, data.username)) {
-              return;
+            if (checkTypingAnimation(data.message, data.username)) {
+                return;
             } else {
-              submitName(data.username, false)
+                submitName(data.username, false)
             }
 
             applyEffects(data.message);
@@ -72,7 +83,7 @@ window.onload = function() {
             var html = '';
             for (var i = 0; i < messages.length; i++) {
                 html += '<b>' + '<h4 style="font-family: Ubuntu Condensed; padding-left: 4px; margin-top: 2px; margin-bottom: 0; display: inline-block;">' + (messages[i].username ? messages[i].username : 'Server') + '</h4>' + ': </b>';
-                html += '<h4 class="message">' + messages[i].message + '</h4>' + '<br />';
+                html += '<h4 id="message">' + messages[i].message + '</h4>' + '<br />';
             }
             $('#content').animate({
                 'scrollTop': content.scrollHeight
@@ -103,7 +114,7 @@ window.onload = function() {
     // Submits Message
     function submitChat() {
         if (name.value == "") {
-            alert("Please type your name!");
+            console.log("Name is missing");
         } else {
             var text = field.value;
             $('#content').animate({
@@ -121,20 +132,23 @@ window.onload = function() {
 
     // Adds Name to Users List, if Name is not Already Present
     function submitName(name, isTyping) {
-        var i=findName(name)
+        var i = findName(name)
         if (i == -1) {
-            names.push( {'name':name, 'isTyping': isTyping });
-        }else {
-          names[i].isTyping=isTyping
+            names.push({
+                'name': name,
+                'isTyping': isTyping
+            });
+        } else {
+            names[i].isTyping = isTyping
         }
 
         var html = ""
         for (var i = 0; i < names.length; i++) {
             html += '<div><b>' + '<h4 style="font-family: Ubuntu Condensed; padding-left: 4px; margin-top: 2px; margin-bottom: 0; display: inline-block;">' + names[i].name + '</h4> </b>';
-            if(names[i].isTyping) {
-              html += '<img id="typing" src="images/giphy.gif" style="padding-bottom: 3px;z-index:500;height: 10px;">'
+            if (names[i].isTyping) {
+                html += '<img id="typing" src="images/giphy.gif" style="padding-bottom: 3px;z-index:500;height: 10px;">'
             }
-            html+= '</div>'
+            html += '</div>'
         }
         users.innerHTML = html
     }
@@ -151,18 +165,22 @@ window.onload = function() {
     // Typing Animation
     setInterval(checkForContent, 1500);
 
-    var previousMessageValue=""
+    var previousMessageValue = ""
 
     function checkForContent() {
         var userTyping = false;
 
         var messageValue = document.getElementById('field').value
 
-        if(messageValue==previousMessageValue) {
-          return
+        if (messageValue == previousMessageValue) {
+            return
         }
 
-        if ( messageValue == '') {
+        if (name.value == '') {
+            return
+        }
+
+        if (messageValue == '') {
             console.log("Not Typing.");
             socket.emit('send', {
                 message: '{CLEAR-TYPING}',
@@ -175,7 +193,7 @@ window.onload = function() {
                 username: name.value
             });
         }
-        previousMessageValue=messageValue
+        previousMessageValue = messageValue
     }
 
     // Rocket Animation
