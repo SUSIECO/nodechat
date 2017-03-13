@@ -27,8 +27,9 @@ window.onload = function() {
     var content = document.getElementById("textlayer");
     var display = document.getElementById("displaylayer");
     var name = document.getElementById("name");
-    var hostname = document.getElementById("hostname")
+    var hostname = document.getElementById("hostname");
     var users = document.getElementById("users");
+    var undisplay = document.getElementById("box2");
 
     hostname.innerHTML = host;
 
@@ -41,6 +42,8 @@ window.onload = function() {
             console.log("Chat Starting!");
             $("#field").prop('readonly', false);
             display.style.opacity = 0;
+            undisplay.style.opacity = 1;
+            $("#undisplay").html("Welcome, " + name.value + "!");
         }
     }
 
@@ -120,7 +123,6 @@ window.onload = function() {
             $('#content').animate({
                 'scrollTop': content.scrollHeight
             }, 200);
-            $('#sendsound')[0].play();
             field.value = "";
             socket.emit('send', {
                 message: text,
@@ -181,13 +183,11 @@ window.onload = function() {
         }
 
         if (messageValue == '') {
-            console.log("Not Typing.");
             socket.emit('send', {
                 message: '{CLEAR-TYPING}',
                 username: name.value
             });
         } else {
-            console.log("Typing!");
             socket.emit('send', {
                 message: '{TYPING}',
                 username: name.value

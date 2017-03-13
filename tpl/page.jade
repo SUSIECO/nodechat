@@ -1,192 +1,224 @@
 doctype html
 html
-  head
-    title The Galaxy
-    link(rel='icon', href='logo.png')
-    script(src='/chat.js')
-    script(src='/socket.io/socket.io.js')
-    link(href='https://fonts.googleapis.com/css?family=Oswald|Roboto+Condensed:300|Ubuntu+Condensed', rel='stylesheet')
-    link(href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css', rel='stylesheet')
-    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css')
-    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js')
-    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
-    style.
-      #sentmsg
-      {
-      font-family: Ubuntu Condensed;
-      padding-left: 4px;
-      margin-top: 2px;
-      margin-bottom: 0;
-      display: inline-block;
-      }
-      h1
-      {
-      font-family: 'Ubuntu Condensed';
-      text-align: center;
-      }
-      input
-      {
-      font-family: 'Ubuntu Condensed';
-      margin-left: 5px;
-      }
-      input:focus
-      {
-      outline: none;
-      }
-      button:focus
-      {
-      outline: none;
-      }
-      body
-      {
-      background-color: black;
-      background: url("images/galaxy.jpg") no-repeat center fixed;
-      -webkit-background-size: cover;
-      -moz-background-size: cover;
-      -o-background-size: cover;
-      background-size: cover;
-      }
-      #send {
-      background-color: #CCC;
-      }
-      #send:hover, #send:focus
-      {
-      background-color: #999;
-      }
-      #textlayer
-      {
-      z-index: 30;
-      margin: 0px;
-      height: 100%;
-      width: 100%;
-      top: 0px;
-      left: 0px;
-      position: absolute;
-      }
-      #animationlayer
-      {
-      z-index: 40;
-      margin: 0px;
-      top: 0px;
-      left: 0px;
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      }
-      #displaylayer
-      {
-      z-index: 50;
-      margin: 0px;
-      top: 0px;
-      left: 0px;
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      }
-      #content
-      {
-      display: inline-block;
-      width: 80.925%;
-      margin: 5px;
-      height: 500px;
-      border: solid 5px #400080;
-      overflow-y: scroll;
-      background-color: white;
-      position: relative;
-      }
-      #users
-      {
-      display: inline-block;
-      width: 18%;
-      margin-top: 5px;
-      margin-left: 0px;
-      margin-bottom: 5px;
-      margin-right: 5px;
-      height: 500px;
-      border: solid 5px #400080;
-      overflow-y: scroll;
-      background-color: white;
-      position: relative;
-      }
-      #login
-      {
-      opacity: 1;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translateX(-50%) translateY(-50%);
-      }
-      #name
-      {
-      font-family: 'Ubuntu Condensed';
-      margin-top: 2px;
-      margin-bottom: 0;
-      padding-left: 3px;
-      padding-right: 3px;
-      text-align: center;
-      font-size: 25px;
-      outline: none;
-      border: none;
-      border-bottom: solid 2px #999;
-      }
-      #message
-      {
-      display: inline-block;
-      font-family: 'Roboto Condensed';
-      margin-top: 2px;
-      margin-bottom: 0;
-      }
-      #start
-      {
-      vertical-align: middle;
-      border: none;
-      background-color: white;
-      }
-      .heading
-      {
-      font-family: Monospace;
-      color: white;
-      }
-      .jumbotron
-      {
-      background-color: rgba(204, 204, 204, 0);
-      }
-      .box
-      {
-      width: 500px;
-      height: 150px;
-      border: solid 5px #999;
-      border-radius: 20px;
-      }
-      .fa.fa-arrow-circle-right
-      {
-      color: #5900B3;
-      }
-      .fa.fa-arrow-circle-right:focus, .fa.fa-arrow-circle-right:hover
-      {
-      color: #400080;
-      }
-      .login-controls
-      {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      }
-  body
-    audio#sendsound(src='send.mp3', type='audio/mpeg')
-    audio#receive(src='receive.mp3', type='audio/mpeg')
-    #hostname
-    img(src='images/thegalaxy.png')
-    #content
-      #animationlayer
-      #textlayer
-      #displaylayer
-        #login.box
-          h1 Welcome to the Galaxy!
-          .login-controls
-              input#name(style='width:190px;', placeholder='Name')
-              button#start.fa.fa-arrow-circle-right.fa-3x
-    #users
-    .controls
-    input#field(style='width:95%;', placeholder='Message', readonly='')
-    input#send(style='margin-top: 0; border: none; padding: 0px 12px 0px 12px; height: 25px; border-radius: 0;', type='submit', value='Send')
+    head
+        title The Galaxy
+        link(rel='icon', href='logo.png')
+        script(src='/chat.js')
+        script(src='/socket.io/socket.io.js')
+        link(href='https://fonts.googleapis.com/css?family=Oswald|Roboto+Condensed:300|Ubuntu+Condensed', rel='stylesheet')
+        link(href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css', rel='stylesheet')
+        link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css')
+        script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js')
+        script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
+        style.
+            #sentmsg
+            {
+            font-family: Ubuntu Condensed;
+            padding-left: 4px;
+            margin-top: 2px;
+            margin-bottom: 0;
+            display: inline-block;
+            }
+            h1
+            {
+            font-family: 'Ubuntu Condensed';
+            text-align: center;
+            }
+            h5
+            {
+            font-family: 'Ubuntu Condensed';
+            text-align: center;
+            }
+            input
+            {
+            font-family: 'Ubuntu Condensed';
+            margin-left: 5px;
+            }
+            input:focus
+            {
+            outline: none;
+            }
+            button:focus
+            {
+            outline: none;
+            }
+            body
+            {
+            background-color: black;
+            background: url("images/galaxy.jpg") no-repeat center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+            }
+            img {
+            display: inline-block;
+            }
+
+            #send {
+            background-color: #CCC;
+            }
+            #send:hover, #send:focus
+            {
+            background-color: #999;
+            }
+            #textlayer
+            {
+            z-index: 30;
+            margin: 0px;
+            height: 100%;
+            width: 100%;
+            top: 0px;
+            left: 0px;
+            position: absolute;
+            }
+            #animationlayer
+            {
+            z-index: 40;
+            margin: 0px;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            }
+            #displaylayer
+            {
+            z-index: 50;
+            margin: 0px;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            }
+            #content
+            {
+            display: inline-block;
+            width: 80.925%;
+            margin: 5px;
+            height: 500px;
+            border: solid 5px #400080;
+            overflow-y: scroll;
+            background-color: white;
+            position: relative;
+            }
+            #users
+            {
+            display: inline-block;
+            width: 18%;
+            margin-top: 5px;
+            margin-left: 0px;
+            margin-bottom: 5px;
+            margin-right: 5px;
+            height: 500px;
+            border: solid 5px #400080;
+            overflow-y: scroll;
+            background-color: white;
+            position: relative;
+            }
+            #login
+            {
+            opacity: 1;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+            }
+            #name
+            {
+            font-family: 'Ubuntu Condensed';
+            margin-top: 2px;
+            margin-bottom: 0;
+            padding-left: 3px;
+            padding-right: 3px;
+            text-align: center;
+            font-size: 25px;
+            outline: none;
+            border: none;
+            border-bottom: solid 2px #999;
+            }
+            #message
+            {
+            display: inline-block;
+            font-family: 'Roboto Condensed';
+            margin-top: 2px;
+            margin-bottom: 0;
+            }
+            #start
+            {
+            vertical-align: middle;
+            border: none;
+            background-color: white;
+            }
+            #undisplay
+            {
+                text-align: center;
+                vertical-align: middle;
+                line-height: 25px;
+            }
+            #box2
+            {
+                display: inline-block;
+                vertical-align: middle;
+                width: 502px;
+                height: 75px;
+                border: solid 5px #999;
+                border-radius: 20px;
+                background-color: white;
+                text-align: center;
+                font-family: 'Roboto Condensed';
+                opacity: 0;
+            }
+
+            .heading
+            {
+            font-family: Monospace;
+            color: white;
+            }
+            .jumbotron
+            {
+            background-color: rgba(204, 204, 204, 0);
+            }
+            .box
+            {
+            width: 500px;
+            height: 170px;
+            border: solid 5px #999;
+            border-radius: 20px;
+            }
+            .fa.fa-arrow-circle-right
+            {
+            color: #5900B3;
+            }
+            .fa.fa-arrow-circle-right:focus, .fa.fa-arrow-circle-right:hover
+            {
+            color: #400080;
+            }
+            .login-controls
+            {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            }
+    body
+        audio#sendsound(src='send.mp3', type='audio/mpeg')
+        audio#receive(src='receive.mp3', type='audio/mpeg')
+        #hostname
+        img(src='images/thegalaxy.png')
+        #box2
+            h1#undisplay [Username]
+        #content
+            #animationlayer
+            #textlayer
+            #displaylayer
+                #login.box
+                    h1 Welcome to the Galaxy!
+                    h5 Please Enter Your Name Before Proceeding.
+                    .login-controls
+                        input#name(style='width:190px;', placeholder='Name')
+                        button#start.fa.fa-arrow-circle-right.fa-3x
+        #users
+        .controls
+        input#field(style='width:95%;', placeholder='Message', readonly='')
+        input#send(style='margin-top: 0; border: none; padding: 0px 12px 0px 12px; height: 25px; border-radius: 0;', type='submit', value='Send')
