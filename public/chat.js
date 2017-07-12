@@ -114,6 +114,18 @@ window.onload = function() {
         }
     });
 
+    $('#type').keypress(function(event) {
+        var key = (event.keyCode ? event.keyCode : event.which);
+        if (key == '13') {
+            console.log('Enter');
+        }
+
+        if (key == '16' && key == '13') {
+            console.log('Shift + Enter');
+        }
+    });
+
+
     // Submits Message
     function submitChat() {
         if (name.value == "") {
